@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bruno mi dios</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .browser-mockup {
+            border-top: 2em solid rgba(230, 230, 230, 0.7);
+            position: relative;
+            height: 75vh;
+        }
+
+        .browser-mockup:before {
+            display: block;
+            position: absolute;
+            content: "";
+            top: -1.25em;
+            left: 1em;
+            width: 0.5em;
+            height: 0.5em;
+            border-radius: 50%;
+            background-color: #f44;
+            box-shadow: 0 0 0 2px #f44, 1.5em 0 0 2px #9b3, 3em 0 0 2px #fb5;
+        }
+
+        .browser-mockup>* {
+            display: block;
+        }
+    </style>
+    <script>
+        function getVideo() {
+            console.log("YACA");
+            const csrftoken = document.cookie.match(/csrftoken=(\w+)/)[1];
+            const screen = document.getElementById('screen');
+            fetch("getVideo/", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                mode: 'cors'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();  // Parsea la respuesta como JSON
+                    } else {
+                        throw new Error('Error al obtener el video');  // Lanza un error
+                    }
+                })
+                .then(data => {
+                    const videoId = data.video_id;
+                    const videoUrl = `https://www.youtube.com/embed/${videoId}`;
+                    const iframe = document.getElementById('iframe');
+                    iframe.src = videoUrl;
+                    screen.appendChild(iframe);
+                })
+                .catch (error => console.log(error));
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-r from-slate-900 to-slate-700 leading-relaxed tracking-wide flex flex-col">
+    <div class="container mx-auto h-screen">
+        <div class="text-white text-center px-3 lg:px-0">
+            <h1 class="my-4 text-2xl md:text-3xl lg:text-5xl font-[500] leading-tight">
+                SOU UM MEME AMBULANTE. 👩‍🦲👅
+            </h1>
+            <p class="leading-normal text-gray-200 text-base md:text-xl lg:text-2xl mb-8">
+                Pagina para k se pongan las pilas
+            </p>
+            {% csrf_token %}
+            <button onclick="getVideo()" type="button"
+                class="text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-300 font-bold rounded-full text-xl w-48 px-5 py-2.5 mr-2 mb-2">Picale</button>
+
+            <button
+                class="bg-black mx-auto lg:mx-0 hover:underline text-gray-200 font-extrabold rounded my-2 md:my-6 py-4 px-8 shadow-lg w-48">
+                Picale
+            </button>
+        </div>
+
+        <div class="flex items-center w-full mx-auto content-end">
+            <div id="screen" class="browser-mockup flex flex-1 m-6 md:px-0 md:m-12 bg-white w-1/2 rounded shadow-xl">
+                <iframe id="iframe" class="w-[100%] h-[100%]" src="{{ video_url }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+</body>
+
+</html>
