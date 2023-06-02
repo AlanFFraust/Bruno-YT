@@ -11,27 +11,25 @@ from django.core.cache import cache
 from myapp.models import Video
 # Create your views here.
 
+#Llamar manualmente para llenar la bd con la lista de videos
 def get_video_list():
     youtube = build('youtube', 'v3', developerKey=settings.YOUTUBE_API_KEY)
-    # Define los parámetros de búsqueda
+    #Parametros de busqueda
     params = {
         'part': 'snippet',
         'channelId': 'UCGrMCMK-90u9T8vSJ7d52uA',
-        'maxResults': 186  # Puedes ajustar el número máximo de resultados aquí
+        'maxResults': 186  
     }
 
     # Realiza la solicitud para obtener los videos del canal
     next_page_token = None
-
+    
     while True:
-        # Agrega el token de página siguiente a los parámetros de búsqueda
         if next_page_token:
             params['pageToken'] = next_page_token
-
-        # Realiza la solicitud para obtener los videos del canal
+            
         videos = youtube.search().list(**params).execute()
 
-        # Itera sobre los resultados y guarda los datos en la base de datos
         for video in videos['items']:
             if 'videoId' in video['id']:
                 video_id = video['id']['videoId']
@@ -39,15 +37,12 @@ def get_video_list():
                 description = video['snippet']['description']
                 published_at = video['snippet']['publishedAt']
 
-                # Verifica si el video_id ya existe y elimina los registros existentes
                 if Video.objects.filter(video_id=video_id).exists():
                     Video.objects.filter(video_id=video_id).delete()
 
-                # Crea una instancia del modelo Video y guárdala en la base de datos
                 video_obj = Video(video_id=video_id, title=title, description=description, published_at=published_at)
                 video_obj.save()
 
-        # Verifica si hay más páginas de resultados disponibles
         next_page_token = videos.get('nextPageToken')
         if not next_page_token:
             break
