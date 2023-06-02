@@ -50,9 +50,9 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        return response.json();  // Parsea la respuesta como JSON
+                        return response.json();
                     } else {
-                        throw new Error('Error al obtener el video');  // Lanza un error
+                        throw new Error('Error al obtener el video');
                     }
                 })
                 .then(data => {
