@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,10 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+load_dotenv('keys.env')
+Youtube_API = os.getenv('YOUTUBE_API_KEY')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-7=_f3^d#t4gk%z)(qc=vuxst6qe8)ph7sb(3jm@dys3_j$xy11'
-YOUTUBE_API_KEY = ''
+YOUTUBE_API_KEY = Youtube_API
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
