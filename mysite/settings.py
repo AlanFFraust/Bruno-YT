@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-7=_f3^d#t4gk%z)(qc=vuxst6qe8)ph7sb(3jm@dys3_j$xy11'
-YOUTUBE_API_KEY = 'AIzaSyD3RTaRw9WRVd61sOi9EOsVmfN1HKXGkNo'
+YOUTUBE_API_KEY = ''
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -45,8 +46,7 @@ INSTALLED_APPS = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',  # Reemplaza con la URL de tu aplicación cliente
-    # Otras URLs permitidas...
+    'http://127.0.0.1:8000',  
 ]
 
 CORS_ALLOW_METHODS = [
