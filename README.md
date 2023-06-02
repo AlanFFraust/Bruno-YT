@@ -7,12 +7,12 @@ Esta es una página web simple que muestra videos aleatorios del canal de YouTub
 
 1.  Clona el repositorio a tu máquina local:
 ```bash
-    git clone https://github.com/tu-usuario/repo.git
-    cd repo
+    git clone https://github.com/AlanFFrausto/Bruno-YT.git
+    cd Bruno-YT
 ```
 2.  Crea y activa un entorno virtual    
  ```bash    
-    python3 -m venv venv
+    python -m venv venv
     source venv/bin/activate
    ```
 3.  Instala las dependencias del proyecto:
